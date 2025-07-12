@@ -48,6 +48,10 @@ local function InitializePressHero()
 
     -- Utility: Get spell icon
     local function GetHeroSpellIcon(spellID)
+        if type(GetSpellInfo) ~= "function" then
+            print("|cff00ffff[Press Hero]|r ERROR: GetSpellInfo is not available in this environment!")
+            return 134400 -- Default: Ability_Shaman_Heroism
+        end
         local icon = nil
         if spellID then
             icon = select(3, GetSpellInfo(spellID))
