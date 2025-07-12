@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="PRESS_HERO_REQUEST">
+        /presshero
+    </Binding>
+</Bindings>
