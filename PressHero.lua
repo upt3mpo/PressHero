@@ -122,6 +122,11 @@ local function InitializePressHero()
         DebugHeroSpells()
         print("|cff00ffff[Press Hero]|r [DEBUG] DebugHeroSpells should have run above.")
     end
+    SLASH_HEROTESTRECV1 = "/herotestrecv"
+    SlashCmdList["HEROTESTRECV"] = function()
+        print("|cff00ffff[Press Hero]|r [DEBUG] Simulating incoming /presshero request from DebugUser...")
+        OnAddonMessage(prefix, "REQ", "PARTY", "DebugUser")
+    end
     BINDING_NAME_PRESSHERO = "Press Hero: Request Heroism/Bloodlust/Time Warp"
 end
 
