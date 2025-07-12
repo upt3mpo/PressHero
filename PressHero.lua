@@ -54,6 +54,9 @@ local function InitializePressHero()
         end
         local channel = IsInRaid() and "RAID" or "PARTY"
         C_ChatInfo.SendAddonMessage(prefix, "REQ", channel)
+        -- Also send a raid warning
+        local alertChannel = IsInRaid() and "RAID_WARNING" or "PARTY"
+        SendChatMessage("PRESS HERO!", alertChannel)
     end
     SLASH_HEROTESTRECV1 = "/herotestrecv"
     SlashCmdList["HEROTESTRECV"] = function()
