@@ -7,5 +7,4 @@
 ## SavedVariables: PressHeroDB
 ## DefaultState: enabled
 
-PressHeroBindings.xml
 PressHero.lua
