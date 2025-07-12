@@ -1,5 +1,3 @@
 <Bindings>
-    <Binding name="PRESS_HERO_REQUEST">
-        /presshero
-    </Binding>
+    <Binding name="Press Hero: Request Heroism/Bloodlust/Time Warp">/presshero</Binding>
 </Bindings>
