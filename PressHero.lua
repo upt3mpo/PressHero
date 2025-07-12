@@ -16,6 +16,10 @@ local function InitializePressHero()
 
     -- Check if player has any Lust spell ready
     local function CanPressHero()
+        if type(GetSpellCooldown) ~= "function" then
+            print("|cff00ffff[Press Hero]|r ERROR: GetSpellCooldown is not available in this environment!")
+            return false, nil, nil
+        end
         for spellID, spellName in pairs(HERO_SPELLS) do
             if IsPlayerSpell(spellID) then
                 local start, duration, enabled = GetSpellCooldown(spellID)
@@ -44,6 +48,10 @@ local function InitializePressHero()
 
     -- Enhanced debug function to check all hero spells
     function DebugHeroSpells()
+        if type(GetSpellCooldown) ~= "function" then
+            print("|cff00ffff[Press Hero]|r ERROR: GetSpellCooldown is not available in this environment!")
+            return
+        end
         print("|cff00ffff[Press Hero]|r [DEBUG] DebugHeroSpells function called!")
         print("|cff00ffff[Press Hero]|r === HERO SPELL DEBUG ===")
         for spellID, spellName in pairs(HERO_SPELLS) do
