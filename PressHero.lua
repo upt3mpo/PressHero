@@ -183,7 +183,6 @@ SlashCmdList["PRESSHERODEBUG"] = function()
     print("|cff00ffff[Press Hero]|r Debug: Addon loaded successfully")
     print("|cff00ffff[Press Hero]|r Debug: In group:", IsInGroup())
     print("|cff00ffff[Press Hero]|r Debug: In raid:", IsInRaid())
-    print("|cff00ffff[Press Hero]|r Debug: In party:", IsInParty())
     
     local canPress, spellID, spellName = CanPressHero()
     print("|cff00ffff[Press Hero]|r Debug: Can press hero:", canPress)
