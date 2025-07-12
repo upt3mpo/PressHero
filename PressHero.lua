@@ -58,7 +58,7 @@ local function InitializePressHero()
         PressHeroAlertFrame.text:SetText("|cffff2222PRESS IT!|r")
         PressHeroAlertFrame.spellLabel:SetText("(" .. label .. ")")
         PressHeroAlertFrame:Show()
-        C_Timer.After(4, function() PressHeroAlertFrame:Hide() end)
+        C_Timer.After(2.5, function() PressHeroAlertFrame:Hide() end)
     end
     local function OnAddonMessage(prefix, msg, channel, sender)
         if prefix ~= "PH_REQUEST_HERO" then return end
