@@ -9,6 +9,21 @@ local function InitializePressHero()
         [264667] = "Hunter: Primal Rage",
         [390386] = "Evoker: Fury of the Aspects",
     }
+    local HERO_ICONS = {
+        SHAMAN = { icon = "Interface\\Icons\\Ability_Shaman_Heroism", label = "Heroism" },
+        MAGE = { icon = "Interface\\Icons\\Spell_Mage_TimeWarp", label = "Time Warp" },
+        HUNTER = { icon = "Interface\\Icons\\Ability_Hunter_PrimalRage", label = "Primal Rage" },
+        EVOKER = { icon = "Interface\\Icons\\ability_evoker_furyoftheaspects", label = "Fury of the Aspects" },
+    }
+    local function GetHeroIconAndLabel()
+        local _, class = UnitClass("player")
+        local entry = HERO_ICONS[class]
+        if entry then
+            return entry.icon, entry.label
+        else
+            return "Interface\\Icons\\Ability_Shaman_Heroism", "Heroism"
+        end
+    end
     local function CanPressHero()
         for spellID, spellName in pairs(HERO_SPELLS) do
             if IsPlayerSpell(spellID) then
@@ -32,9 +47,16 @@ local function InitializePressHero()
             PressHeroAlertFrame.text:SetPoint("LEFT", PressHeroAlertFrame.icon, "RIGHT", 100, 0)
             PressHeroAlertFrame.text:SetJustifyH("LEFT")
             PressHeroAlertFrame.text:SetJustifyV("MIDDLE")
+            -- Spell label under icon
+            PressHeroAlertFrame.spellLabel = PressHeroAlertFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalHuge")
+            PressHeroAlertFrame.spellLabel:SetFont("Fonts\\FRIZQT__.TTF", 48, "OUTLINE")
+            PressHeroAlertFrame.spellLabel:SetPoint("TOP", PressHeroAlertFrame.icon, "BOTTOM", 0, -10)
+            PressHeroAlertFrame.spellLabel:SetJustifyH("CENTER")
         end
-        PressHeroAlertFrame.icon:SetTexture("Interface\\Icons\\Ability_Shaman_Heroism")
+        local icon, label = GetHeroIconAndLabel()
+        PressHeroAlertFrame.icon:SetTexture(icon)
         PressHeroAlertFrame.text:SetText("|cffff2222PRESS IT!|r")
+        PressHeroAlertFrame.spellLabel:SetText("(" .. label .. ")")
         PressHeroAlertFrame:Show()
         C_Timer.After(4, function() PressHeroAlertFrame:Hide() end)
     end
