@@ -10,7 +10,6 @@ local HERO_SPELLS = {
     [2825]  = "Shaman: Bloodlust",
     [80353] = "Mage: Time Warp",
     [264667] = "Hunter: Primal Rage",
-    [178207] = "Drums: Drums of Fury",
     [390386] = "Evoker: Fury of the Aspects",
 }
 
@@ -23,18 +22,15 @@ local function CanPressHero()
             
             -- Check for hero debuffs based on spell type
             local hasDebuff = false
-            if spellID == 32182 or spellID == 2825 or spellID == 230935 or spellID == 90355 or spellID == 160452 or spellID == 146555 then
+            if spellID == 32182 or spellID == 2825 then
                 -- Shaman spells - check for Sated
                 hasDebuff = AuraUtil.FindAuraByName("Sated", "player", "HARMFUL")
-            elseif spellID == 80353 then
-                -- Mage Time Warp - check for Temporal Displacement
+            elseif spellID == 80353 or spellID == 390386 then
+                -- Mage Time Warp and Evoker Fury - check for Temporal Displacement
                 hasDebuff = AuraUtil.FindAuraByName("Temporal Displacement", "player", "HARMFUL")
             elseif spellID == 264667 then
                 -- Hunter Primal Rage - check for Exhaustion
                 hasDebuff = AuraUtil.FindAuraByName("Exhaustion", "player", "HARMFUL")
-            elseif spellID == 390386 then
-                -- Evoker Fury of the Aspects - check for Temporal Displacement (same as Time Warp)
-                hasDebuff = AuraUtil.FindAuraByName("Temporal Displacement", "player", "HARMFUL")
             end
             
             if ready and not hasDebuff then
@@ -58,6 +54,8 @@ end
 -- On message received
 local function OnAddonMessage(prefix, msg, channel, sender)
     if prefix ~= "PH_REQUEST_HERO" then return end
+    
+    print(string.format("|cff00ffff[Press Hero]|r Received request from %s", sender))
     
     local canPress, spellID, spellName = CanPressHero()
     
@@ -132,9 +130,10 @@ end
 -- Event handler
 local f = CreateFrame("Frame")
 f:RegisterEvent("CHAT_MSG_ADDON")
-f:SetScript("OnEvent", function(_, event, ...)
+f:SetScript("OnEvent", function(self, event, ...)
     if event == "CHAT_MSG_ADDON" then
-        OnAddonMessage(...)
+        local prefix, msg, channel, sender = ...
+        OnAddonMessage(prefix, msg, channel, sender)
     end
 end)
 
@@ -157,3 +156,18 @@ end
 -- Add status check command
 SLASH_PRESSHEROSTATUS1 = "/herostatus"
 SlashCmdList["PRESSHEROSTATUS"] = CheckHeroStatus
+
+-- Add debug command to test addon communication
+SLASH_PRESSHERODEBUG1 = "/herodebug"
+SlashCmdList["PRESSHERODEBUG"] = function()
+    print("|cff00ffff[Press Hero]|r Debug: Addon loaded successfully")
+    print("|cff00ffff[Press Hero]|r Debug: In group:", IsInGroup())
+    print("|cff00ffff[Press Hero]|r Debug: In raid:", IsInRaid())
+    print("|cff00ffff[Press Hero]|r Debug: In party:", IsInParty())
+    
+    local canPress, spellID, spellName = CanPressHero()
+    print("|cff00ffff[Press Hero]|r Debug: Can press hero:", canPress)
+    if canPress then
+        print("|cff00ffff[Press Hero]|r Debug: Available spell:", spellName)
+    end
+end
