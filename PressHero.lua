@@ -46,7 +46,41 @@ local function InitializePressHero()
         return 1, 1, 1 -- Default white
     end
 
-    -- On message received
+    -- Utility: Get spell icon
+    local function GetHeroSpellIcon(spellID)
+        local icon = nil
+        if spellID then
+            icon = select(3, GetSpellInfo(spellID))
+        end
+        return icon or 134400 -- Default: Ability_Shaman_Heroism
+    end
+
+    -- Custom alert frame
+    local function ShowCustomHeroAlert(spellID)
+        if not PressHeroAlertFrame then
+            PressHeroAlertFrame = CreateFrame("Frame", "PressHeroAlertFrame", UIParent, "BackdropTemplate")
+            PressHeroAlertFrame:SetSize(350, 120)
+            PressHeroAlertFrame:SetPoint("CENTER")
+            PressHeroAlertFrame:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background", edgeFile = nil, tile = true, tileSize = 16, edgeSize = 16})
+            PressHeroAlertFrame:SetBackdropColor(0, 0, 0, 0.7)
+            -- Icon
+            PressHeroAlertFrame.icon = PressHeroAlertFrame:CreateTexture(nil, "ARTWORK")
+            PressHeroAlertFrame.icon:SetSize(64, 64)
+            PressHeroAlertFrame.icon:SetPoint("LEFT", 20, 0)
+            -- Text
+            PressHeroAlertFrame.text = PressHeroAlertFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlightHuge")
+            PressHeroAlertFrame.text:SetPoint("LEFT", PressHeroAlertFrame.icon, "RIGHT", 20, 0)
+            PressHeroAlertFrame.text:SetJustifyH("LEFT")
+            PressHeroAlertFrame.text:SetJustifyV("MIDDLE")
+        end
+        local icon = GetHeroSpellIcon(spellID)
+        PressHeroAlertFrame.icon:SetTexture(icon)
+        PressHeroAlertFrame.text:SetText("|cffff2222PRESS IT!|r")
+        PressHeroAlertFrame:Show()
+        C_Timer.After(2.5, function() PressHeroAlertFrame:Hide() end)
+    end
+
+    -- On message received (update to show custom alert)
     local function OnAddonMessage(prefix, msg, channel, sender)
         if prefix ~= "PH_REQUEST_HERO" then return end
         print(string.format("|cff00ffff[Press Hero]|r Received request from %s", sender))
@@ -59,6 +93,7 @@ local function InitializePressHero()
             PlaySound(8959, "Master")
             RaidNotice_AddMessage(RaidWarningFrame, "PRESS HERO NOW!", ChatTypeInfo["RAID_WARNING"])
             print(string.format("|cff00ffff[Press Hero]|r |cff00ff00PRESS IT!|r (%s requested by %s)", spellName, coloredSender))
+            ShowCustomHeroAlert(spellID)
             if not UnitIsDeadOrGhost("player") then
                 UIFrameFlash(WorldFrame, 0.5, 0.5, 1, false, 0, 0)
             end
