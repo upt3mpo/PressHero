@@ -42,7 +42,8 @@ local function CanPressHero()
 end
 
 -- Enhanced debug function to check all hero spells
-local function DebugHeroSpells()
+function DebugHeroSpells()
+    print("|cff00ffff[Press Hero]|r [DEBUG] DebugHeroSpells function called!")
     print("|cff00ffff[Press Hero]|r === HERO SPELL DEBUG ===")
     for spellID, spellName in pairs(HERO_SPELLS) do
         local hasSpell = IsPlayerSpell(spellID)
@@ -190,6 +191,6 @@ SlashCmdList["PRESSHERODEBUG"] = function()
         print("|cff00ffff[Press Hero]|r Debug: Available spell:", spellName)
     end
     
-    -- Run detailed spell debug
     DebugHeroSpells()
+    print("|cff00ffff[Press Hero]|r [DEBUG] DebugHeroSpells should have run above.")
 end
