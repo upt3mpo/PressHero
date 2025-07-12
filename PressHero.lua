@@ -41,6 +41,25 @@ local function CanPressHero()
     return false, nil, nil
 end
 
+-- Enhanced debug function to check all hero spells
+local function DebugHeroSpells()
+    print("|cff00ffff[Press Hero]|r === HERO SPELL DEBUG ===")
+    for spellID, spellName in pairs(HERO_SPELLS) do
+        local hasSpell = IsPlayerSpell(spellID)
+        local start, duration, enabled = GetSpellCooldown(spellID)
+        local ready = (enabled == 1 and (start + duration - GetTime()) <= 0)
+        
+        print(string.format("|cff00ffff[Press Hero]|r %s (ID: %d):", spellName, spellID))
+        print(string.format("  - Has spell: %s", hasSpell and "YES" or "NO"))
+        if hasSpell then
+            print(string.format("  - Enabled: %s", enabled == 1 and "YES" or "NO"))
+            print(string.format("  - Cooldown: %.1f seconds", math.max(0, start + duration - GetTime())))
+            print(string.format("  - Ready: %s", ready and "YES" or "NO"))
+        end
+    end
+    print("|cff00ffff[Press Hero]|r === END DEBUG ===")
+end
+
 -- Get player's class color
 local function GetPlayerClassColor(playerName)
     local _, class = UnitClass(playerName)
@@ -170,4 +189,7 @@ SlashCmdList["PRESSHERODEBUG"] = function()
     if canPress then
         print("|cff00ffff[Press Hero]|r Debug: Available spell:", spellName)
     end
+    
+    -- Run detailed spell debug
+    DebugHeroSpells()
 end
