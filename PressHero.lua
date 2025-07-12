@@ -12,14 +12,27 @@ local function InitializePressHero()
     local HERO_ICONS = {
         SHAMAN = { icon = "Interface\\Icons\\Ability_Shaman_Heroism", label = "Heroism" },
         MAGE = { icon = "Interface\\Icons\\Spell_Arcane_TemporalShift", label = "Time Warp" },
-        HUNTER = { icon = "Interface\\Icons\\Ability_Hunter_PrimalRage", label = "Primal Rage" },
+        HUNTER = function()
+            local spec = GetSpecialization()
+            local specID = spec and select(1, GetSpecializationInfo(spec))
+            -- Marksmanship specID is 254
+            if specID == 254 and IsPlayerSpell(466904) then
+                return "Interface\\Icons\\ability_hunter_harrierscry", "Harrier's Cry"
+            elseif IsPlayerSpell(264667) then
+                return "Interface\\Icons\\Ability_Hunter_PrimalRage", "Primal Rage"
+            else
+                return "Interface\\Icons\\Ability_Hunter_PrimalRage", "Primal Rage"
+            end
+        end,
         EVOKER = { icon = "Interface\\Icons\\ability_evoker_furyoftheaspects", label = "Fury of the Aspects" },
     }
     local function GetHeroIconAndLabel()
         local _, class = UnitClass("player")
         class = string.upper(class or "")
         local entry = HERO_ICONS[class]
-        if entry then
+        if type(entry) == "function" then
+            return entry()
+        elseif entry then
             return entry.icon, entry.label
         else
             return "Interface\\Icons\\Ability_Shaman_Heroism", "Heroism"
