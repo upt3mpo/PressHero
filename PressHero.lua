@@ -194,3 +194,5 @@ SlashCmdList["PRESSHERODEBUG"] = function()
     DebugHeroSpells()
     print("|cff00ffff[Press Hero]|r [DEBUG] DebugHeroSpells should have run above.")
 end
+
+BINDING_NAME_PRESSHERO = "Press Hero: Request Heroism/Bloodlust/Time Warp"
