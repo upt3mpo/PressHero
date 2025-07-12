@@ -1,10 +1,9 @@
 ## Interface: 100207
 ## X-Expansion: retail
-## Title: Press Hero!
-## Notes: Group coordination tool for Heroism/Bloodlust/Time Warp in M+ and raids
+## Title: PressHero
+## Notes: Minimal group coordination tool for heroism/bloodlust/time warp effects
 ## Author: Dan Manez
-## Version: 0.2
-## SavedVariables: PressHeroDB
+## Version: 1.0
 ## DefaultState: enabled
 
 PressHero.lua
