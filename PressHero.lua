@@ -7,6 +7,7 @@ local function InitializePressHero()
         [2825]  = "Shaman: Bloodlust",
         [80353] = "Mage: Time Warp",
         [264667] = "Hunter: Primal Rage",
+        [466904] = "Hunter: Harrier's Cry",
         [390386] = "Evoker: Fury of the Aspects",
     }
     local HERO_ICONS = {
