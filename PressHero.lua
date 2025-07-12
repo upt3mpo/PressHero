@@ -59,26 +59,26 @@ local function InitializePressHero()
         return icon or 134400 -- Default: Ability_Shaman_Heroism
     end
 
-    -- Custom alert frame (minimal, always show default icon, bigger box and text)
+    -- Custom alert frame (minimal, always show default icon, much bigger text and icon)
     local function ShowCustomHeroAlert()
         if not PressHeroAlertFrame then
             PressHeroAlertFrame = CreateFrame("Frame", "PressHeroAlertFrame", UIParent, "BackdropTemplate")
-            PressHeroAlertFrame:SetSize(600, 200)
+            PressHeroAlertFrame:SetSize(800, 300)
             PressHeroAlertFrame:SetPoint("CENTER")
             PressHeroAlertFrame:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background", edgeFile = nil, tile = true, tileSize = 16, edgeSize = 16})
-            PressHeroAlertFrame:SetBackdropColor(0, 0, 0, 0.8)
+            PressHeroAlertFrame:SetBackdropColor(0, 0, 0, 0.85)
             -- Icon
             PressHeroAlertFrame.icon = PressHeroAlertFrame:CreateTexture(nil, "ARTWORK")
-            PressHeroAlertFrame.icon:SetSize(128, 128)
-            PressHeroAlertFrame.icon:SetPoint("LEFT", 40, 0)
+            PressHeroAlertFrame.icon:SetSize(192, 192)
+            PressHeroAlertFrame.icon:SetPoint("LEFT", 60, 0)
             -- Text
             PressHeroAlertFrame.text = PressHeroAlertFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlightHuge")
-            PressHeroAlertFrame.text:SetFont("Fonts\FRIZQT__.TTF", 64, "OUTLINE")
-            PressHeroAlertFrame.text:SetPoint("LEFT", PressHeroAlertFrame.icon, "RIGHT", 40, 0)
+            PressHeroAlertFrame.text:SetFont("Fonts\\FRIZQT__.TTF", 96, "OUTLINE, THICKOUTLINE")
+            PressHeroAlertFrame.text:SetPoint("LEFT", PressHeroAlertFrame.icon, "RIGHT", 60, 0)
             PressHeroAlertFrame.text:SetJustifyH("LEFT")
             PressHeroAlertFrame.text:SetJustifyV("MIDDLE")
         end
-        PressHeroAlertFrame.icon:SetTexture(134400) -- Ability_Shaman_Heroism
+        PressHeroAlertFrame.icon:SetTexture("Interface\\Icons\\Ability_Shaman_Heroism")
         PressHeroAlertFrame.text:SetText("|cffff2222PRESS IT!|r")
         PressHeroAlertFrame:Show()
         C_Timer.After(2.5, function() PressHeroAlertFrame:Hide() end)
